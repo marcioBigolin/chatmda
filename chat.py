@@ -53,3 +53,8 @@ def chat():
         if "prompt_history" in st.session_state.prompt_history and len(st.session_state.prompt_history) > 0:
             if st.button(("Limpar")):
                 st.session_state.prompt_history = []
+
+
+st.header("Chat")
+chat()
+
