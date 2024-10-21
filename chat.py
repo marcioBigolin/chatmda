@@ -30,10 +30,13 @@ def chat():
 
     if "prompt_history" not in st.session_state:
         st.session_state.prompt_history = []
+        #chat.response = "Digite uma pergunta, por exemplo 'Qual o melhor estudante?' "
+        #st.session_state.prompt_history.append(chat)
 
 
     with st.form("Question"):
         question = st.text_input(("Digite aqui uma pergunta sobre os dados"), value="", type="default")
+        chat.question = question
         submitted = st.form_submit_button(("Gerar"))
         if submitted:
             with st.spinner():
@@ -48,17 +51,36 @@ def chat():
 
                 if os.path.isfile('exports/charts/temp_chart.png'):
                     im = plt.imread('exports/charts/temp_chart.png')
+                    chat.img = im
                     st.image(im)
                     os.remove('exports/charts/temp_chart.png')
 
                 if x is not None:
+                    chat.response = x
                     st.write(x)
 
-                st.session_state.prompt_history.append(question)
+                st.session_state.prompt_history.append(chat)
     
 
         st.subheader(("Prompt history:"))
-        st.write(st.session_state.prompt_history)
+        
+        for elemento in st.session_state.prompt_history:
+            if hasattr(elemento, 'question') and elemento.question:
+                st.markdown(
+                f"<p style='border: 1px solid #ccc; padding: 10px; border-radius: 5px; margin-bottom: 10px; text-align: right;'> {elemento.question}</p>",  unsafe_allow_html=True
+                )
+
+            if hasattr(elemento, 'img'):
+                st.image(elemento.img)
+
+            if hasattr(elemento, 'response') and elemento.response:
+                st.markdown(
+                    f"<p style='border: 1px solid #ccc; padding: 10px; border-radius: 5px; margin-bottom: 10px; text-align: left;'> {elemento.response}</p>",  unsafe_allow_html=True
+                )
+                                   
+           
+            
+        
 
         if "prompt_history" in st.session_state.prompt_history and len(st.session_state.prompt_history) > 0:
             if st.button(("Limpar")):

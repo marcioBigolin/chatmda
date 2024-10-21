@@ -1,6 +1,6 @@
 #!/bin/sh
 
-if [ "$(docker ps -a | grep mda)" ]; then
+if [ "$(docker ps -a | grep chatmda)" ]; then
     echo "Container exists"
     docker start chatmda
 else
