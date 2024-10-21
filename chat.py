@@ -6,7 +6,7 @@ def conf():
 
     dados = []
 
-    caminho_arquivo_tom = arquivoConf('.streamlit/secrets.toml')
+    caminho_arquivo_tom = '.streamlit/secrets.toml'
 
         # Ler o arquivo TOM
     with open(caminho_arquivo_tom, 'r') as arquivo:
