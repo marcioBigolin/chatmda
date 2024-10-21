@@ -11,6 +11,7 @@ def conf():
         # Ler o arquivo TOM
     with open(caminho_arquivo_tom, 'r') as arquivo:
         dados = toml.load(arquivo)
+        st.text(dados)
 
 def chat():
     from pandasai import SmartDataframe
@@ -27,7 +28,7 @@ def chat():
         submitted = st.form_submit_button(("Gerar"))
         if submitted:
             with st.spinner():
-                llm = OpenAI(api_token=conf()['openai']['key'])
+                llm = OpenAI(api_token=conf()['key'])
                 pandas_ai = SmartDataframe("./assets/demo.csv", config={
                       "llm": llm, 
                     "conversational": False, 
