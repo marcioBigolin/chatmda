@@ -63,8 +63,11 @@ def chat():
     
 
         st.subheader(("Prompt history:"))
-        
-        for elemento in st.session_state.prompt_history:
+        flag = False
+        for elemento in reversed(st.session_state.prompt_history):
+            if flag == False:
+                flag = True
+                continue
             if hasattr(elemento, 'question') and elemento.question:
                 st.markdown(
                 f"<p style='border: 1px solid #ccc; padding: 10px; border-radius: 5px; margin-bottom: 10px; text-align: right;'> {elemento.question}</p>",  unsafe_allow_html=True
