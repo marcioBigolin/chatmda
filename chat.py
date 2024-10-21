@@ -22,32 +22,29 @@ def chat():
         st.session_state.prompt_history = []
 
 
-    #Para não precisar clicar 2x no botão
-    if "openai_key" in st.session_state:
-    
-        with st.form("Question"):
-            question = st.text_input(("Digite aqui uma pergunta sobre os dados"), value="", type="default")
-            submitted = st.form_submit_button(("Gerar"))
-            if submitted:
-                with st.spinner():
-                    llm = OpenAI(api_token=conf()['openai']['key'])
-                    pandas_ai = SmartDataframe("./assets/demo.csv", config={
-                    "llm": llm, 
+    with st.form("Question"):
+        question = st.text_input(("Digite aqui uma pergunta sobre os dados"), value="", type="default")
+        submitted = st.form_submit_button(("Gerar"))
+        if submitted:
+            with st.spinner():
+                llm = OpenAI(api_token=conf()['openai']['key'])
+                pandas_ai = SmartDataframe("./assets/demo.csv", config={
+                      "llm": llm, 
                     "conversational": False, 
                     "enable_cache": True,
-                    })
+                })
 
-                    x = pandas_ai.chat(question)
+                x = pandas_ai.chat(question)
 
-                    if os.path.isfile('exports/charts/temp_chart.png'):
-                        im = plt.imread('exports/charts/temp_chart.png')
-                        st.image(im)
-                        os.remove('exports/charts/temp_chart.png')
+                if os.path.isfile('exports/charts/temp_chart.png'):
+                    im = plt.imread('exports/charts/temp_chart.png')
+                    st.image(im)
+                    os.remove('exports/charts/temp_chart.png')
 
-                    if x is not None:
-                        st.write(x)
+                if x is not None:
+                    st.write(x)
 
-                    st.session_state.prompt_history.append(question)
+                st.session_state.prompt_history.append(question)
     
 
         st.subheader(("Prompt history:"))
