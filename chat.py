@@ -11,7 +11,7 @@ def conf():
         # Ler o arquivo TOM
     with open(caminho_arquivo_tom, 'r') as arquivo:
         dados = toml.load(arquivo)
-        st.text(dados)
+    return dados
 
 def chat():
     from pandasai import SmartDataframe
