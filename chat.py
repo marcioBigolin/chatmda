@@ -1,12 +1,21 @@
 import streamlit as st
 
+def arquivoConf(nome_arquivo, extensao="toml"):
+    import os
+    
+    arquivo_local = nome_arquivo.replace('.toml', '.local.toml')
 
+    if os.path.isfile(arquivo_local):
+        return arquivo_local
+    else:
+        return nome_arquivo
+    
 def conf():
     import toml
 
     dados = []
 
-    caminho_arquivo_tom = '.streamlit/secrets.toml'
+    caminho_arquivo_tom = arquivoConf('.streamlit/secrets.toml')
 
         # Ler o arquivo TOM
     with open(caminho_arquivo_tom, 'r') as arquivo:
